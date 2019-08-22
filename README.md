@@ -6,8 +6,11 @@ For minimalists.
 - Style: SCSS + postcss/autoprefixer => CSS
 - Logic: ES6 + Babel => JS
 
+## Installation
+`npm install`
+
 ## Development
-`webpack run dev`
+`npm run dev`
 
 ## Production
-`webpack run build`
+`npm run build`
