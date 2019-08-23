@@ -4,7 +4,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    base: './src/scripts/base.js',
     index: './src/scripts/index.js',
     about: './src/scripts/about.js',
   },
@@ -33,12 +32,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/pages/index.hbs',
-      chunks: ['base', 'index']
+      chunks: ['index']
     }),
     new HtmlWebpackPlugin({
       filename: 'about/index.html',
       template: 'src/pages/about.hbs',
-      chunks: ['base', 'about']
+      chunks: ['about']
     }),
   ],
 };
