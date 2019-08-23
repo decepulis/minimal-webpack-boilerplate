@@ -12,21 +12,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
   },
-  module: {
-    rules: [
-      { 
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "babel-loader"
-      }, {
-        test: /\.hbs$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'handlebars-loader'
-        }
-      }
-    ]
-  },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
@@ -40,4 +25,65 @@ module.exports = {
       chunks: ['about']
     }),
   ],
+  module: {
+    rules: [
+      { 
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
+      }, {
+        test: /\.hbs$/,
+        exclude: /node_modules/,
+        loader: 'handlebars-loader',
+        query: { inlineRequires: '\/img\/' }
+      }, {
+        test: /\.(png|jpe?g|gif)$/,
+        include: [path.resolve(__dirname, 'src/img')],
+        use: [
+          {
+            loader: 'url-loader',
+            options: { 
+              limit: 10 * 1024,
+              fallback: 'file-loader',
+              outputPath: 'img'
+            },
+          }, 
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: { progressive: true, quality: 65 },
+              optipng: { enabled: false, },
+              pngquant: { quality: '65-90', speed: 4 },
+              gifsicle: { interlaced: false, },
+            }
+          }
+        ]
+      }, {
+        test: /\.svg$/,
+        include: [path.resolve(__dirname, 'src/img')],
+        use: [
+          {
+            loader: 'svg-url-loader',
+            options: {
+              limit: 10 * 1024,
+              noquotes: true,
+              outputPath: 'img'
+            },
+          }, {
+            loader: 'image-webpack-loader'
+          }
+        ]
+      }, {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'font'
+            }
+          },
+        ]
+      }
+    ]
+  },
 };
