@@ -1,10 +1,10 @@
-# webpack-boilerplate
-
-For minimalists.
+# minimal-webpack-boilerplate
 
 - Markup: Handlebars => HTML
 - Style: SCSS + postcss/autoprefixer => CSS
 - Logic: ES6 + Babel => JS
+
+That's it.
 
 ## Commands
 ### Installation
