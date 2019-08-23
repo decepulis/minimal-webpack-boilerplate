@@ -36,6 +36,7 @@ This is a minimal example showing the bullet points from the previous section. Y
 ### Style
 `src/styles/about.scss`
 ```scss
+@import 'base.scss';
 $primary-color: red;
 html {
     background: $primary-color;
@@ -44,7 +45,8 @@ html {
 ### Script
 `src/scripts/about.js`
 ```javascript
-import `../styles/about.scss`
+import 'base.js';
+import '../styles/about.scss';
 
 console.log('Hello from About!')
 ```
