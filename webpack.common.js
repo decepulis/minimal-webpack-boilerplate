@@ -16,12 +16,12 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'src/pages/index.hbs',
+      template: 'src/pages/index.pug',
       chunks: ['index']
     }),
     new HtmlWebpackPlugin({
       filename: 'about/index.html',
-      template: 'src/pages/about.hbs',
+      template: 'src/pages/about.pug',
       chunks: ['about']
     }),
   ],
@@ -32,10 +32,9 @@ module.exports = {
         exclude: /node_modules/,
         loader: "babel-loader"
       }, {
-        test: /\.hbs$/,
+        test: /\.pug$/,
         exclude: /node_modules/,
-        loader: 'handlebars-loader',
-        query: { inlineRequires: '\/img\/' }
+        loader: 'pug-loader',
       }, {
         test: /\.(png|jpe?g|gif)$/,
         include: [path.resolve(__dirname, 'src/img')],

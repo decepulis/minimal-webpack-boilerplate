@@ -1,8 +1,8 @@
 # minimal-webpack-boilerplate
 
-- Markup: Handlebars => HTML
-- Style: SCSS + postcss/autoprefixer => CSS
-- Logic: ES6 + Babel => JS
+- Markup: [Pug](https://pugjs.org/api/getting-started.html) or HTML => HTML
+- Style: [Sass](https://sass-lang.com) or CSS => autoprefixer/cssnano => CSS
+- Logic: ES6 => Babel => JS
 
 That's it.
 
@@ -19,12 +19,12 @@ _(runs `webpack-dev-server --open --config webpack.dev.js`)_
 _(runs `webpack --config webpack.prod.js"`)_
 
 ## Adding Web Pages
-- `src/styles/` contans pages' styles as .css or .scss
+- `src/styles/` contains pages' styles as .css or .scss
   - Webpack automatically detects .css or .scss files
 - `src/scripts` contains pages' scripts as ES6 .js
   - Webpack must be told to watch these files by adding them to the `entry` section of `webpack.common.js`
   - The format for the `entry` section is `{ chunk_name: './src/scripts/chunk_file.js }`
-- `src/pages` contains pages' markup, as either .hbs (handlebars templates) or .html (none/lodash templates)
+- `src/pages` contains pages' markup, as either .pug (pug templates) or .html (none/lodash templates)
   - Webpack must be told to watch these files by adding them to the `plugins` section of `webpack.common.js`
     - These files are added using the [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
     - Scripts for a page can be added by adding the above-defined `chunk-name` to the `chunks` section of the `new HtmlWebpackPlugin({})`
@@ -52,27 +52,27 @@ console.log('Hello from About!')
 ```
 
 ### Markup
-`src/pages/layouts/base.hbs`
-```hbs
-<!doctype html>
-<html>
-  <head>
-    <title>{{#if title}}{{title}}{{else}}Default Title{{/if}}</title>
-  </head>
-  <body>
-    <h1>Base</h1>
-    {{#> body-block}}<p>Default Body</p>{{/body-block}}
-  </body>
-</html>
+`src/pages/layouts/base.pug`
+```pug
+html
+  head
+    title #{title}
+  body
+    h1 Base
+    block content
 ```
 
-`src/pages/about.hbs`
-```hbs
-{{#> layouts/base title="About" }}
-  {{#*inline "body-block"}}
-    <h2>About</h2>
-  {{/inline}}
-{{/layouts/base}}
+`src/pages/about.pug`
+```pug
+extends layouts/base.pug
+
+block content
+  h2 About
+
+  img(
+    src=require("../img/sofia.jpeg")
+    width=400
+  )
 ```
 
 ### Webpack
@@ -93,7 +93,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: 'about/index.html',
-      template: 'src/pages/about.hbs',
+      template: 'src/pages/about.pug',
       chunks: ['about']  //  - Link webpages to scripts here - //
     }),
   ],
@@ -109,13 +109,11 @@ module.exports = {
       { 
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
+        loader: 'babel-loader'
       }, {
-        test: /\.hbs$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'handlebars-loader'
-        }
+        test: /\.pug$/,
+        exclude: /node_modules/,
+        loader: 'pug-loader',
       }
     ]
   },
