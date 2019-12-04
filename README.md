@@ -1,4 +1,10 @@
-# minimal-webpack-boilerplate
+I thought that, as a control freak, I would enjoy making my own webpack more than I would enjoy using [Parcel.js](https://parceljs.org/). 
+
+Nope. Turns out that Parcel is delightful and does everything I need. Oh well.
+
+I'll leave this up for posterity. I present to you... my webpack configuration...
+
+# ~minimal-webpack-boilerplate~ parcel-but-not-as-good
 
 - Markup: [Pug](https://pugjs.org/api/getting-started.html) or HTML => HTML
 - Style: [Sass](https://sass-lang.com) or CSS => autoprefixer/cssnano => CSS
